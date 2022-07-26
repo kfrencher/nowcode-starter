@@ -428,10 +428,11 @@ interface GlideElementDescriptor_proto {
 /** Scoped GlideRecord is used for database operations instead of writing SQL queries. Provides data access APIs to retrieve, update, and delete records from a table */
 declare var GlideRecord: GlideRecord;
 interface GlideRecord {
-    new(): GlideRecord_proto;
+    new(tableName: string): GlideRecord_proto;
     readonly prototype: GlideRecord_proto;
 }
 interface GlideRecord_proto {
+    [fieldName:string]: any;
     /** Insert a new record using the field values that have been set for the current record */
     insert(): string;
     /** Runs the query against the table based on the specified filters by addQuery and addEncodedQuery */
