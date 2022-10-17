@@ -3,12 +3,8 @@ Copyright (C) 2019 ServiceNow, Inc. All rights reserved.
 */
  
 /** The scoped GlideDate class provides methods for performing operations on GlideDate objects, such as instantiating GlideDate objects or working with GlideDate fields */
-declare const GlideDate: GlideDate;
-interface GlideDate {
-    new(): GlideDate_proto;
-    readonly prototype: GlideDate_proto;
-}
-interface GlideDate_proto {
+declare class GlideDate {
+    constructor();
     /** Gets the duration difference between two GlideDate values */
     subtract(start: GlideDate, end: GlideDate): GlideDuration;
     /** Gets the date in the given date format */
@@ -31,12 +27,8 @@ interface GlideDate_proto {
     getYearNoTZ(): number;
 }
 /** The scoped GlideDateTime default constructor, instantiates a new GlideDateTime object with the current date and time in Greenwich Mean Time (GMT). Optional 'value' parameter with a date and time value in the UTC time zone specified with the format yyyy-MM-dd HH:mm:ss */
-declare const GlideDateTime: GlideDateTime;
-interface GlideDateTime {
-    new(): GlideDateTime_proto;
-    readonly prototype: GlideDateTime_proto;
-}
-interface GlideDateTime_proto {
+declare class GlideDateTime {
+    constructor();
     /** Gets the date in the system time zone */
     getDate(): GlideDate;
     /** Gets the duration difference between two GlideDateTime values. Pass a single paramter which specifies milliseconds to subtract from the current GlideDateTime object */
@@ -153,12 +145,8 @@ interface GlideDateTime_proto {
     onOrBefore(Object: GlideDateTime): boolean;
 }
 /** The scoped GlideDuration class provides methods for working with spans of time or durations. GlideDuration objects store the duration as a date and time from January 1, 1970, 00:00:00. As a result, setValue() and getValue() use the GlideDateTime object for parameters and return values */
-declare const GlideDuration: GlideDuration;
-interface GlideDuration {
-    new(): GlideDuration_proto;
-    readonly prototype: GlideDuration_proto;
-}
-interface GlideDuration_proto {
+declare class GlideDuration {
+    constructor();
     /** Adds a given duration to the current duration */
     add(value: GlideDuration): GlideDuration;
     subtract(value: GlideDuration): GlideDuration;
@@ -180,12 +168,8 @@ interface GlideDuration_proto {
     setValue(o: any): void;
 }
 /** The scoped GlideTime class provides methods for performing operations on GlideTime objects, such as instantiating GlideTime objects or working with GlideTime fields */
-declare const GlideTime: GlideTime;
-interface GlideTime {
-    new(): GlideTime_proto;
-    readonly prototype: GlideTime_proto;
-}
-interface GlideTime_proto {
+declare class GlideTime {
+    constructor();
     /** Gets the duration difference between two GlideTime values */
     subtract(start: GlideTime, end: GlideTime): GlideDuration;
     /** Gets the time in the given time format */
@@ -216,12 +200,8 @@ interface GlideTime_proto {
     getSeconds(): number;
 }
 /** The scoped GlideSchedule API provides methods for performing operations on GlideSchedule objects, such as adding new schedule segments to a schedule, determining if a datetime is within the schedule, or setting the schedule timezone */
-declare const GlideSchedule: GlideSchedule;
-interface GlideSchedule {
-    new(): GlideSchedule_proto;
-    readonly prototype: GlideSchedule_proto;
-}
-interface GlideSchedule_proto {
+declare class GlideSchedule {
+    constructor();
     /** Adds a new schedule segment to the current schedule */
     add(startDate: GlideDateTime, offset: GlideDuration): GlideDateTime;
     /** Determines the elapsed time in the schedule between two date time values using the timezone of the schedule or, if that is not specified, the timezone of the session */
@@ -236,12 +216,8 @@ interface GlideSchedule_proto {
     setTimeZone(tz: string): void;
 }
 /** The Scoped GlideUser API provides access to information about the current user and current user roles. Using the Scoped GlideUser API avoids the need to use the slower GlideRecord queries to get user information */
-declare const GlideUser: GlideUser;
-interface GlideUser {
-    new(): GlideUser_proto;
-    readonly prototype: GlideUser_proto;
-}
-interface GlideUser_proto {
+declare class GlideUser {
+    constructor();
     /** Gets the sys_id of current user */
     getID(): string;
     /** Gets the user id, or login name, of the current user */
@@ -260,12 +236,8 @@ interface GlideUser_proto {
     getPreference(name: string): string;
 }
 /** GlideSession manages all of the information for a user session. You can retrieve this from gs.getSession() */
-declare const GlideSession: GlideSession;
-interface GlideSession {
-    new(): GlideSession_proto;
-    readonly prototype: GlideSession_proto;
-}
-interface GlideSession_proto {
+declare class GlideSession {
+    constructor();
     /** Checks if the current session is interactive */
     isInteractive(): boolean;
     /** Determines if the current user is currently logged in */
@@ -286,12 +258,8 @@ interface GlideSession_proto {
     putClientData(name: string, value: string): void;
 }
 /** The scoped GlideAggregate class is an extension of GlideRecord and allows database aggregation (COUNT, SUM, MIN, MAX, AVG) queries to be done. This can be helpful in creating customized reports or in calculations for calculated fields. The GlideAggregate class works only on number fields. Since currency fields are strings, you can't use the GlideAggregate class on currency fields */
-declare const GlideAggregate: GlideAggregate;
-interface GlideAggregate {
-    new(): GlideAggregate_proto;
-    readonly prototype: GlideAggregate_proto;
-}
-interface GlideAggregate_proto {
+declare class GlideAggregate {
+    constructor();
     /** Adds a query to the aggregate */
     addQuery(field: string, operator: string, value: string): GlideQueryCondition;
     /** Adds a NULL query to the aggregate */
@@ -332,12 +300,8 @@ interface GlideAggregate_proto {
     setGroup(value: boolean): void;
 }
 /** The Scoped GlideElement API provides methods for dealing with fields and their values. Scoped GlideElement methods are available for the fields of the current GlideRecord */
-declare const GlideElement: GlideElement;
-interface GlideElement {
-    new(): GlideElement_proto;
-    readonly prototype: GlideElement_proto;
-}
-interface GlideElement_proto {
+declare class GlideElement {
+    constructor();
     /** Retrieves the choice list for a field */
     getChoices(dependent: string): [];
     /** Sets the display value of the field */
@@ -410,12 +374,8 @@ interface GlideElement_proto {
     dateNumericValue(value: string): number;
 }
 /** The scoped GlideElementDescriptor class provides information about individual fields */
-declare const GlideElementDescriptor: GlideElementDescriptor;
-interface GlideElementDescriptor {
-    new(): GlideElementDescriptor_proto;
-    readonly prototype: GlideElementDescriptor_proto;
-}
-interface GlideElementDescriptor_proto {
+declare class GlideElementDescriptor {
+    constructor();
     /** Returns the field's name */
     getName(): string;
     /** Returns the field's data type */
@@ -426,12 +386,8 @@ interface GlideElementDescriptor_proto {
     getLength(): number;
 }
 /** Scoped GlideRecord is used for database operations instead of writing SQL queries. Provides data access APIs to retrieve, update, and delete records from a table */
-declare var GlideRecord: GlideRecord;
-interface GlideRecord {
-    new(tableName: string): GlideRecord_proto;
-    readonly prototype: GlideRecord_proto;
-}
-interface GlideRecord_proto {
+declare class GlideRecord {
+    constructor(tableName: string);
     [fieldName:string]: any;
     /** Insert a new record using the field values that have been set for the current record */
     insert(): string;
@@ -537,28 +493,19 @@ interface GlideRecord_proto {
     addFunction(functionDefinition: string): void;
 }
 /** GlideRecordSecure is a class inherited from GlideRecord that performs the same functions as GlideRecord, and also enforces ACLs */
-declare const GlideRecordSecure: GlideRecordSecure;
-interface GlideRecordSecure extends GlideRecord {
+declare class GlideRecordSecure extends GlideRecord {
 }
 /** The scoped QueryCondition API provides additional AND or OR conditions that can be added to the current condition, allowing you to build complex queries such as: category='hardware' OR category='software' AND priority='2' AND priority='1' */
-declare const GlideQueryCondition: GlideQueryCondition;
-interface GlideQueryCondition {
-    new(): GlideQueryCondition_proto;
-    readonly prototype: GlideQueryCondition_proto;
-}
-interface GlideQueryCondition_proto {
+declare class GlideQueryCondition {
+    constructor();
     /** Adds an OR condition to the current condition. oper is an optional parameter */
     addOrCondition(name: string, oper: string, value: any): GlideQueryCondition;
     /** Adds an AND condition to the current condition. oper is an optional parameter */
     addCondition(name: string, oper: string, value: any): GlideQueryCondition;
 }
 /** The API allows you to evaluate scripts from a GlideRecord field */
-declare const GlideScopedEvaluator: GlideScopedEvaluator;
-interface GlideScopedEvaluator {
-    new(): GlideScopedEvaluator_proto;
-    readonly prototype: GlideScopedEvaluator_proto;
-}
-interface GlideScopedEvaluator_proto {
+declare class GlideScopedEvaluator {
+    constructor();
     /** Evaluates a script from a GlideRecord field. variables parameter is optional */
     evaluateScript(gr: GlideRecord, scriptField: string, variables: any): any;
     /** Puts a variable into the GlideScopedEvaluator object */
@@ -567,16 +514,11 @@ interface GlideScopedEvaluator_proto {
     getVariable(name: string): any;
 }
 /** A wrapper around an InputStream. No functions are provided to manipulate the stream from script. Rather this object can be passed to any API which takes an InputStream as an input parameter */
-declare const GlideScriptableInputStream: GlideScriptableInputStream;
-interface GlideScriptableInputStream {
+declare class GlideScriptableInputStream {
 }
 /** ServiceNow processors are equivalent to Java servlets. Processors provide a customizable URL endpoint that can execute arbitrary server-side Javascript code and produce output such as TEXT, JSON, or HTML. The GlideScriptedProcessor APIs are used in processor scripts to access the the processor (servlet) capabilities. There are no constructors for the GlideScriptedProcessor APIs. The methods are called using the global variable g_processor. A useful global variable, g_target, is available in processor scripts. It contains the table name extracted from the URL. The URL to a processor has the format: https://<instance name.servicenow.com>/<path endpoint>.do?<parameter endpoint>=<value> where the path endpoint and parameter endpoint are defined on the processor form */
-declare const GlideScriptedProcessor: GlideScriptedProcessor;
-interface GlideScriptedProcessor {
-    new(): GlideScriptedProcessor_proto;
-    readonly prototype: GlideScriptedProcessor_proto;
-}
-interface GlideScriptedProcessor_proto {
+declare class GlideScriptedProcessor {
+    constructor();
     /** Redirects to the specified URL */
     redirect(url: string): void;
     /** Writes the contents of the given string to the response */
@@ -585,12 +527,8 @@ interface GlideScriptedProcessor_proto {
     writeJSON(jsonObject: any): void;
 }
 /** ServiceNow processors are equivalent to Java servlets. Processors provide a customizable URL endpoint that can execute arbitrary server-side Javascript code and produce output such as TEXT, JSON, or HTML. The GlideServletRequest API is used in processor scripts to access the HttpServletRequest object. The GlideServletRequest object provides a subset of the HttpServletRequest APIs. The methods are called using the global variable g_request. A useful global variable, g_target, is available in processor scripts. It contains the table name extracted from the URL. The URL to a processor has the format: https://<instance name.servicenow.com>/<path endpoint>.do?<parameter endpoint>=<value> where the path endpoint and parameter endpoint are defined on the processor form */
-declare const GlideServletRequest: GlideServletRequest;
-interface GlideServletRequest {
-    new(): GlideServletRequest_proto;
-    readonly prototype: GlideServletRequest_proto;
-}
-interface GlideServletRequest_proto {
+declare class GlideServletRequest {
+    constructor();
     /** Returns the content type */
     getContentType(): string;
     /** Returns the header */
@@ -607,12 +545,8 @@ interface GlideServletRequest_proto {
     getQueryString(): string;
 }
 /** ServiceNow processors are equivalent to Java servlets. Processors provide a customizable URL endpoint that can execute arbitrary server-side Javascript code and produce output such as TEXT, JSON, or HTML. The GlideServletResponse API is used in processor scripts to access the HttpServletResponse object. The GlideServletResponse object provides a subset of the HttpServletResponse APIs. The methods are called using the global variable g_response. A useful global variable, g_target, is available in processor scripts. It contains the table name extracted from the URL. The URL to a processor has the format: https://<instance name.servicenow.com>/<path endpoint>.do?<parameter endpoint>=<value> where the path endpoint and parameter endpoint are defined on the processor form */
-declare const GlideServletResponse: GlideServletResponse;
-interface GlideServletResponse {
-    new(): GlideServletResponse_proto;
-    readonly prototype: GlideServletResponse_proto;
-}
-interface GlideServletResponse_proto {
+declare class GlideServletResponse {
+    constructor();
     /** Sends a temporary redirect to the client */
     sendRedirect(location: string): void;
     /** Sets the MIME type of the response */
@@ -623,42 +557,29 @@ interface GlideServletResponse_proto {
     setHeader(key: string, value: string): void;
 }
 /** The scoped GlideFilter class allows you to determine if a record meets a specified set of requirements. There is no constructor for scoped GlideFilter, it is accessed by using the global object 'GlideFilter' */
-declare const GlideFilter: GlideFilter;
-interface GlideFilter {
+declare class GlideFilter {
     /** Returns true when the record meets the filter condition */
     checkRecord(gr: GlideRecord, filter: string, value: boolean): boolean;
 }
 /** GlideLocale is a global object that can be called in scripts. Use the get() method to get a GlideLocale object */
-declare const GlideLocale: GlideLocale;
-interface GlideLocale {
-    new(): GlideLocale_proto;
-    readonly prototype: GlideLocale_proto;
+declare class GlideLocale {
+    constructor();
     /** Returns the GlideLocale object */
-    get(): GlideLocale;
-}
-interface GlideLocale_proto {
+    static get(): GlideLocale;
     /** Returns the grouping separator */
     getDecimalSeparator(): string;
     /** Returns the decimal separator */
     getGroupingSeparator(): string;
 }
 /** Scoped API for PluginManager */
-declare const GlidePluginManager: GlidePluginManager;
-interface GlidePluginManager {
-    new(): GlidePluginManager_proto;
-    readonly prototype: GlidePluginManager_proto;
-}
-interface GlidePluginManager_proto {
+declare class GlidePluginManager {
+    constructor();
     /** Determine if a plugin is activated */
     isActive(pluginID: string): boolean;
 }
 /** The Scoped GlideTableHierarchy API provides methods for handling information about table relationships */
-declare const GlideTableHierarchy: GlideTableHierarchy;
-interface GlideTableHierarchy {
-    new(): GlideTableHierarchy_proto;
-    readonly prototype: GlideTableHierarchy_proto;
-}
-interface GlideTableHierarchy_proto {
+declare class GlideTableHierarchy {
+    constructor();
     /** Returns the table's name */
     getName(): string;
     /** Returns a list of the table names in the hierarchy */
@@ -681,12 +602,8 @@ interface GlideTableHierarchy_proto {
     hasExtensions(): boolean;
 }
 /** The Scoped GlideDBFunctionBuilder provides a builder API for creating platform function definition */
-declare const GlideDBFunctionBuilder: GlideDBFunctionBuilder;
-interface GlideDBFunctionBuilder {
-    new(): GlideDBFunctionBuilder_proto;
-    readonly prototype: GlideDBFunctionBuilder_proto;
-}
-interface GlideDBFunctionBuilder_proto {
+declare class GlideDBFunctionBuilder {
+    constructor();
     /** Add a field parameter to the current function */
     field(fieldName: string): GlideDBFunctionBuilder;
     /** Add a constant parameter to the current function */
@@ -715,12 +632,8 @@ interface GlideDBFunctionBuilder_proto {
     now(): GlideDBFunctionBuilder;
 }
 /** XMLDocument2 is a JavaScript Object wrapper for parsing and extracting XML data from an XML string. Use this JavaScript class to instantiate an object from an XML string, usually a return value from a Web Service invocation, or the XML payload of ECC Queue */
-declare const XMLDocument2: XMLDocument2;
-interface XMLDocument2 {
-    new(): XMLDocument2_proto;
-    readonly prototype: XMLDocument2_proto;
-}
-interface XMLDocument2_proto {
+declare class XMLDocument2 {
+    constructor();
     /** Gets the node specified in the xpath */
     getNode(xpath: string): XMLNode;
     /** Gets the first node in the specified xpath */
@@ -745,12 +658,8 @@ interface XMLDocument2_proto {
     toString(): string;
 }
 /** The scoped XMLNode API allows you to query values from XML nodes. XMLNodes are extracted from XMLDocument2 objects, which contain XML strings */
-declare const XMLNode: XMLNode;
-interface XMLNode {
-    new(): XMLNode_proto;
-    readonly prototype: XMLNode_proto;
-}
-interface XMLNode_proto {
+declare class XMLNode {
+    constructor();
     /** Gets the node's last child node */
     getLastChild(): XMLNode;
     /** Gets the node's first child node */
@@ -773,12 +682,8 @@ interface XMLNode_proto {
     toString(): string;
 }
 /** The scoped XMLNodeIterator class allows you to iterate through a node of a XML document */
-declare const XMLNodeIterator: XMLNodeIterator;
-interface XMLNodeIterator {
-    new(): XMLNodeIterator_proto;
-    readonly prototype: XMLNodeIterator_proto;
-}
-interface XMLNodeIterator_proto {
+declare class XMLNodeIterator {
+    constructor();
     /** Gets the next element in the iteration */
     next(): XMLNode;
     /** Determines if the iteration has more elements */
@@ -919,13 +824,13 @@ interface gs {
     /** Returns a String of the form :interval,value,operator */
     datePart(interval: string, value: string, operator: string): string;
     /** Uses the error level to log a message to the system log */
-    error(message: string, parm1: Object, parm2: Object, parm3: Object, parm4: Object, parm5: Object): void;
+    error(message: string, parm1?: Object, parm2?: Object, parm3?: Object, parm4?: Object, parm5?: Object): void;
     /** Uses the warn level to log a message to the system log */
-    warn(message: string, parm1: Object, parm2: Object, parm3: Object, parm4: Object, parm5: Object): void;
+    warn(message: string, parm1?: Object, parm2?: Object, parm3?: Object, parm4?: Object, parm5?: Object): void;
     /** Uses the info level to log a message to the system log */
-    info(message: string, parm1: Object, parm2: Object, parm3: Object, parm4: Object, parm5: Object): void;
+    info(message: string, parm1?: Object, parm2?: Object, parm3?: Object, parm4?: Object, parm5?: Object): void;
     /** Uses the debug level to log a message to the system log */
-    debug(message: string, parm1: Object, parm2: Object, parm3: Object, parm4: Object, parm5: Object): void;
+    debug(message: string, parm1?: Object, parm2?: Object, parm3?: Object, parm4?: Object, parm5?: Object): void;
     /** Determines if debugging is active for a specific scope */
     isDebugging(): boolean;
 }
@@ -1040,11 +945,8 @@ interface sn_ws {
     SOAPResponseV2: SOAPResponseV2;
 }
 /** Instantiates a RESTMessageV2 object. When you have a REST message record, you can add the optional name and methodName information */
-interface RESTMessageV2 {
-    new(): RESTMessageV2_proto;
-    readonly prototype: RESTMessageV2_proto;
-}
-interface RESTMessageV2_proto {
+declare class RESTMessageV2 {
+    constructor();
     /** Send the REST message to the endpoint */
     execute(): RESTResponseV2;
     /** Send the REST message to the endpoint asynchronously. The instance does not wait for a response from the web service provider when making asynchronous calls */
@@ -1095,11 +997,8 @@ interface RESTMessageV2_proto {
     getRequestHeaders(): Object;
 }
 /** The RESTResponseV2 API allows you to use the data returned by an outbound REST message in JavaScript code. A RESTResponseV2 object is returned by the RESTMessageV2 functions execute() and executeAsync() */
-interface RESTResponseV2 {
-    new(): RESTResponseV2_proto;
-    readonly prototype: RESTResponseV2_proto;
-}
-interface RESTResponseV2_proto {
+declare class RESTResponseV2 {
+    constructor();
     /** Set the amount of time the instance waits for the response */
     waitForResponse(timeoutSecs: number): void;
     /** Get the numeric HTTP status code returned by the REST provider */
@@ -1122,11 +1021,8 @@ interface RESTResponseV2_proto {
     getErrorMessage(): string;
 }
 /** Instantiates a SOAPMessageV2 object. Specify optional message and a function if there is a SOAP message record */
-interface SOAPMessageV2 {
-    new(): SOAPMessageV2_proto;
-    readonly prototype: SOAPMessageV2_proto;
-}
-interface SOAPMessageV2_proto {
+declare class SOAPMessageV2 {
+    constructor();
     /** Send the SOAP Message to the endpoint */
     execute(): SOAPResponse;
     /** Send the SOAP Message to the endpoint asynchronously */
@@ -1171,11 +1067,8 @@ interface SOAPMessageV2_proto {
     setWSSecurityX509Token(keystoreId: string, keystoreAlias: string, keystorePassword: string, certificateId: string): void;
 }
 /** The SOAPResponseV2 API allows you to use the data returned by an outbound SOAP message in JavaScript code. A SOAPResponseV2 object is returned by the SOAPMessageV2 functions execute() and executeAsync() */
-interface SOAPResponseV2 {
-    new(): SOAPResponseV2_proto;
-    readonly prototype: SOAPResponseV2_proto;
-}
-interface SOAPResponseV2_proto {
+declare class SOAPResponseV2 {
+    constructor();
     /** Set the amount of time the instance waits for a response */
     waitForResponse(timeoutSecs: number): void;
     /** Get the numeric HTTP status code returned by the SOAP provider */
@@ -1216,11 +1109,8 @@ interface sn_ws_int {
     WSSoapRequestDocument: WSSoapRequestDocument;
 }
 /** Allows you to access request details in Scripted REST APIs */
-interface RESTAPIRequest {
-    new(): RESTAPIRequest_proto;
-    readonly prototype: RESTAPIRequest_proto;
-}
-interface RESTAPIRequest_proto {
+declare class RESTAPIRequest {
+    constructor();
     /** The body of the request */
     body: body;
     /** Get the value of a specific header from the request */
@@ -1237,11 +1127,8 @@ interface RESTAPIRequest_proto {
     getRequestedQueryCategory(): string;
 }
 /** Allows you to access the request body as a stream, as a string, de-serialized into an object, or as an array of obects */
-interface RESTAPIRequestBody {
-    new(): RESTAPIRequestBody_proto;
-    readonly prototype: RESTAPIRequestBody_proto;
-}
-interface RESTAPIRequestBody_proto {
+declare class RESTAPIRequestBody {
+    constructor();
     /** The body of the request as a stream. Note, this object provides no functions to manipulate the stream from script. Rather this object can be passed to another API which takes an InputStream as an input parameter */
     dataStream: dataStream;
     /** The request body as a string -- be careful to consider impact to memory */
@@ -1252,11 +1139,8 @@ interface RESTAPIRequestBody_proto {
     hasNext(): boolean;
 }
 /** Allows you to configure the HTTP response in Scripted REST APIs */
-interface RESTAPIResponse {
-    new(): RESTAPIResponse_proto;
-    readonly prototype: RESTAPIResponse_proto;
-}
-interface RESTAPIResponse_proto {
+declare class RESTAPIResponse {
+    constructor();
     /** Set response HTTP status code */
     setStatus(code: number): void;
     /** Set response headers from the specified object */
@@ -1275,29 +1159,20 @@ interface RESTAPIResponse_proto {
     getStreamWriter(): RESTAPIResponseStream;
 }
 /** Allows you to write streams or strings directly to the response stream in a Scripted REST API */
-interface RESTAPIResponseStream {
-    new(): RESTAPIResponseStream_proto;
-    readonly prototype: RESTAPIResponseStream_proto;
-}
-interface RESTAPIResponseStream_proto {
+declare class RESTAPIResponseStream {
+    constructor();
     /** Write a string directly to the response stream. Can be called multiple times. Caller responsible for response format and setting proper Content-Type and status code prior to calling */
     writeString(stringToWrite: string): void;
     /** Write an InputStream directly to the response stream. Can be called multiple times. Caller responsible for response format and setting proper Content-Type and status code prior to calling */
     writeStream(inputStream: Object): void;
 }
 /** Provides access to request input parameters */
-interface WSRequest {
-    new(): WSRequest_proto;
-    readonly prototype: WSRequest_proto;
-}
-interface WSRequest_proto {
+declare class WSRequest {
+    constructor();
 }
 /** Allows setting response output parameters */
-interface WSResponse {
-    new(): WSResponse_proto;
-    readonly prototype: WSResponse_proto;
-}
-interface WSResponse_proto {
+declare class WSResponse {
+    constructor();
 }
 /** Error types which can be set as the response body of a Scripted REST API */
 declare const sn_ws_err: sn_ws_err;
@@ -1316,11 +1191,8 @@ interface sn_ws_err {
     ServiceError: ServiceError;
 }
 /** A generic error message wrapper to set status code and detailed error message in the response */
-interface ServiceError {
-    new(): ServiceError_proto;
-    readonly prototype: ServiceError_proto;
-}
-interface ServiceError_proto {
+declare class ServiceError {
+    constructor();
     /** The response status code -- defaults to 500 */
     setStatus(code: number): void;
     /** The error message */
@@ -1345,11 +1217,8 @@ interface sn_clotho {
     DataBuilder: DataBuilder;
 }
 /** Instantiates a MetricBase transformer for the specified GlideRecord */
-interface Transformer {
-    new(): Transformer_proto;
-    readonly prototype: Transformer_proto;
-}
-interface Transformer_proto {
+declare class Transformer {
+    constructor();
     /** Groups the subject records by the specified field */
     groupBy(field: string): TransformPart;
     /** Specifies the metric field that this transformer operates on */
@@ -1358,11 +1227,8 @@ interface Transformer_proto {
     execute(rangeStart: GlideDateTime, rangeEnd: GlideDateTime): TransformResult;
 }
 /** Defines a transformer's transforms */
-interface TransformPart {
-    new(): TransformPart_proto;
-    readonly prototype: TransformPart_proto;
-}
-interface TransformPart_proto {
+declare class TransformPart {
+    constructor();
     /** Groups the subject records by the specified field */
     groupBy(field: string): TransformPart;
     /** Specifies the metric field that this transformer operates on */
@@ -1423,11 +1289,8 @@ interface TransformPart_proto {
     limit(count: number): TransformPart;
 }
 /** An object that contains a transform execution result */
-interface TransformResult {
-    new(): TransformResult_proto;
-    readonly prototype: TransformResult_proto;
-}
-interface TransformResult_proto {
+declare class TransformResult {
+    constructor();
     /** Returns a series with the specified label */
     getByLabel(label: string): Data;
     /** Returns the all series of this TransformResult in the form of an array */
@@ -1438,11 +1301,8 @@ interface TransformResult_proto {
     byGroup(): map;
 }
 /** Stores a single series of MetricBase data */
-interface Data {
-    new(): Data_proto;
-    readonly prototype: Data_proto;
-}
-interface Data_proto {
+declare class Data {
+    constructor();
     /** Returns the label of this series */
     getLabel(): string;
     /** Returns the name of the metric this series operates on */
@@ -1467,22 +1327,16 @@ interface Data_proto {
     fromModelString(model: string): Data;
 }
 /** Interacts with the MetricBase database */
-interface Client {
-    new(): Client_proto;
-    readonly prototype: Client_proto;
-}
-interface Client_proto {
+declare class Client {
+    constructor();
     /** Uses the specified DataBuilder to put data into MetricBase */
     put(dataBuilder: DataBuilder): void;
     /** Performs the specified transform(s) over the specified range */
     transform(o1: Object, o2: GlideDateTime, o3: GlideDateTime): Object;
 }
 /** Builds data to put into MetricBase */
-interface DataBuilder {
-    new(): DataBuilder_proto;
-    readonly prototype: DataBuilder_proto;
-}
-interface DataBuilder_proto {
+declare class DataBuilder {
+    constructor();
     /** Adds the specified value to the data at the specified time */
     add(start: GlideDateTime, value: number): DataBuilder;
 }
