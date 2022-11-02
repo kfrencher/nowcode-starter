@@ -28,7 +28,7 @@ declare class GlideDate {
 }
 /** The scoped GlideDateTime default constructor, instantiates a new GlideDateTime object with the current date and time in Greenwich Mean Time (GMT). Optional 'value' parameter with a date and time value in the UTC time zone specified with the format yyyy-MM-dd HH:mm:ss */
 declare class GlideDateTime {
-    constructor();
+    constructor(dateString?: string);
     /** Gets the date in the system time zone */
     getDate(): GlideDate;
     /** Gets the duration difference between two GlideDateTime values. Pass a single paramter which specifies milliseconds to subtract from the current GlideDateTime object */
@@ -146,7 +146,7 @@ declare class GlideDateTime {
 }
 /** The scoped GlideDuration class provides methods for working with spans of time or durations. GlideDuration objects store the duration as a date and time from January 1, 1970, 00:00:00. As a result, setValue() and getValue() use the GlideDateTime object for parameters and return values */
 declare class GlideDuration {
-    constructor();
+    constructor(millis: number);
     /** Adds a given duration to the current duration */
     add(value: GlideDuration): GlideDuration;
     subtract(value: GlideDuration): GlideDuration;
@@ -201,7 +201,8 @@ declare class GlideTime {
 }
 /** The scoped GlideSchedule API provides methods for performing operations on GlideSchedule objects, such as adding new schedule segments to a schedule, determining if a datetime is within the schedule, or setting the schedule timezone */
 declare class GlideSchedule {
-    constructor();
+    constructor(scheduledSysId: string);
+    isInSchedule(time: GlideDateTime): boolean;
     /** Adds a new schedule segment to the current schedule */
     add(startDate: GlideDateTime, offset: GlideDuration): GlideDateTime;
     /** Determines the elapsed time in the schedule between two date time values using the timezone of the schedule or, if that is not specified, the timezone of the session */
@@ -259,9 +260,10 @@ declare class GlideSession {
 }
 /** The scoped GlideAggregate class is an extension of GlideRecord and allows database aggregation (COUNT, SUM, MIN, MAX, AVG) queries to be done. This can be helpful in creating customized reports or in calculations for calculated fields. The GlideAggregate class works only on number fields. Since currency fields are strings, you can't use the GlideAggregate class on currency fields */
 declare class GlideAggregate {
-    constructor();
+    constructor(tableName: string);
     /** Adds a query to the aggregate */
-    addQuery(field: string, operator: string, value: string): GlideQueryCondition;
+    addQuery(field: string, operator: string, value: (string|string[])): GlideQueryCondition;
+    addQuery(field: string, value: (string|string[])): GlideQueryCondition;
     /** Adds a NULL query to the aggregate */
     addNullQuery(field: string): GlideQueryCondition;
     /** Adds a NOT NULL query to the aggregate */
@@ -410,7 +412,8 @@ declare class GlideRecord {
     /** Enables and disables the running of business rules and script engines. When disabled, inserts and updates are not audited */
     setWorkflow(e: boolean): void;
     /** Adds a filter to return records by specifying a field and value. You can use an optional 'operator' as a second parameter */
-    addQuery(name: string, value: string): GlideQueryCondition;
+    addQuery(name: string, value: (string|string[])): GlideQueryCondition;
+    addQuery(name: string, operator: string, value: (string|string[])): GlideQueryCondition;
     /** Adds a filter to return active records */
     addActiveQuery(): GlideQueryCondition;
     /** Adds a filter to return records where the specified field is null */
@@ -442,7 +445,7 @@ declare class GlideRecord {
     /** Retrieves the name of the display field */
     getDisplayName(): string;
     /** Retrieves the display value for the current record */
-    getDisplayValue(fieldName: string): string;
+    getDisplayValue(fieldName?: string): string;
     getClassDisplayValue(): string;
     /** The label of the field as a String */
     getLabel(): string;
@@ -692,6 +695,11 @@ declare class XMLNodeIterator {
 /** The scoped GlideSystem (referred to by the variable name 'gs' in any server-side JavaScript) API provides a number of convenient methods to get information about the system, the current logged in user, etc. */
 declare const gs: gs;
 interface gs {
+    beginningOfToday(): string;
+    logWarning(msg:string, source?:string):void;
+    logDebug(msg:string, source?:string):void;
+    logError(msg:string, source?:string):void;
+    log(msg:string, source?:string):void;
     /** Returns a reference to the GlideUser object for the current user */
     getUser(): GlideUser;
     /** Gets a reference to the current Glide session */
