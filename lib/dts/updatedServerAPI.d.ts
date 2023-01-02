@@ -1,7 +1,7 @@
 /*
 Copyright (C) 2019 ServiceNow, Inc. All rights reserved.
 */
- 
+
 /** The scoped GlideDate class provides methods for performing operations on GlideDate objects, such as instantiating GlideDate objects or working with GlideDate fields */
 declare class GlideDate {
     constructor();
@@ -110,7 +110,7 @@ declare class GlideDateTime {
     /** Sets the day of the month to a specified value in the UTC time zone */
     setDayOfMonthUTC(day: number): void;
     /** Sets a date and time value using the current user's display format and time zone. Also set an optional parameter 'format', to set date and time format */
-    setDisplayValue(value: string, format: string): void;
+    setDisplayValue(value: string, format?: string): void;
     /** Sets a date and time value using the internal format and the current user's time zone */
     setDisplayValueInternal(value: string): void;
     /** Sets the month stored by the GlideDateTime object to a specified value using the current user's time zone */
@@ -262,8 +262,8 @@ declare class GlideSession {
 declare class GlideAggregate {
     constructor(tableName: string);
     /** Adds a query to the aggregate */
-    addQuery(field: string, operator: string, value: (string|string[])): GlideQueryCondition;
-    addQuery(field: string, value: (string|string[])): GlideQueryCondition;
+    addQuery(field: string, operator: string, value: (string | string[])): GlideQueryCondition;
+    addQuery(field: string, value: (string | string[])): GlideQueryCondition;
     /** Adds a NULL query to the aggregate */
     addNullQuery(field: string): GlideQueryCondition;
     /** Adds a NOT NULL query to the aggregate */
@@ -390,7 +390,7 @@ declare class GlideElementDescriptor {
 /** Scoped GlideRecord is used for database operations instead of writing SQL queries. Provides data access APIs to retrieve, update, and delete records from a table */
 declare class GlideRecord {
     constructor(tableName: string);
-    [fieldName:string]: any;
+    [fieldName: string]: any;
     /** Insert a new record using the field values that have been set for the current record */
     insert(): string;
     /** Runs the query against the table based on the specified filters by addQuery and addEncodedQuery */
@@ -412,8 +412,8 @@ declare class GlideRecord {
     /** Enables and disables the running of business rules and script engines. When disabled, inserts and updates are not audited */
     setWorkflow(e: boolean): void;
     /** Adds a filter to return records by specifying a field and value. You can use an optional 'operator' as a second parameter */
-    addQuery(name: string, value: (string|string[])): GlideQueryCondition;
-    addQuery(name: string, operator: string, value: (string|string[])): GlideQueryCondition;
+    addQuery(name: string, value: (string | string[] | boolean)): GlideQueryCondition;
+    addQuery(name: string, operator: string, value: (string | string[] | boolean)): GlideQueryCondition;
     /** Adds a filter to return active records */
     addActiveQuery(): GlideQueryCondition;
     /** Adds a filter to return records where the specified field is null */
@@ -696,10 +696,9 @@ declare class XMLNodeIterator {
 declare const gs: gs;
 interface gs {
     beginningOfToday(): string;
-    logWarning(msg:string, source?:string):void;
-    logDebug(msg:string, source?:string):void;
-    logError(msg:string, source?:string):void;
-    log(msg:string, source?:string):void;
+    logWarning(msg: string, source?: string): void;
+    logError(msg: string, source?: string): void;
+    log(msg: string, source?: string): void;
     /** Returns a reference to the GlideUser object for the current user */
     getUser(): GlideUser;
     /** Gets a reference to the current Glide session */
@@ -707,7 +706,7 @@ interface gs {
     /** Queues an event for the event manager */
     eventQueue(name: string, record: GlideRecord, parm1: string, parm2: string, queue: string): void;
     /** Retrieves a message from UI messages */
-    getProperty(key: string, alt: Object): string;
+    getProperty(key: string, alt?: Object): string;
     urlDecode(url: string): string;
     urlEncode(url: string): string;
     base64Decode(s: string): string;
@@ -1348,6 +1347,70 @@ declare class DataBuilder {
     /** Adds the specified value to the data at the specified time */
     add(start: GlideDateTime, value: number): DataBuilder;
 }
+declare class Iterator {
+    next(): any;
+    hasNext(): boolean;
+}
+declare class Set {
+    iterator(): Iterator;
+    contains(item: any): boolean;
+    toArray(): any[];
+}
+declare class Hashtable {
+    get(key: any): any;
+    put(key: any, value: any): any;
+    keySet(): Set
+    toString(): string;
+}
+declare class GlideLDAPResult {
+    hasMore(): boolean;
+    next(): Hashtable;
+}
+declare class GlideLDAP {
+    /**
+     * Returns the configuration that is used for instance. Call
+     * {@link GlideLDAP#setConfigID} before calling this method
+     * protected ArrayList fBinaryAttributes = GlideProperties.getArrayList("glide.ldap.binary_attributes", "objectsid"); 
+     * protected boolean fVerbose = GlideProperties.getBoolean("glide.ldap.listen.verbose"); 
+     * protected boolean fFollowRefs = GlideProperties.getBoolean("glide.ldap.follow_referral");
+     * 
+     * env.put("java.naming.factory.initial", this.fInitialContextFactory); 
+     * env.put("java.naming.provider.url", this.fLDAPUrl); 
+     * env.put("java.naming.ldap.derefAliases", "never");
+     * env.put("java.naming.security.protocol", "ssl");
+     * if (this.fFollowRefs) { 
+     *   env.put("java.naming.referral", "follow"); 
+     * } 
+     * if (!StringUtil.nil(this.fDN)) { 
+     *   env.put("java.naming.security.principal", this.fDN); 
+     *   env.put("java.naming.security.credentials", this.fPassword); 
+     *   env.put("java.naming.security.authentication", "simple"); 
+     * } else { 
+     *   env.put("java.naming.security.authentication", "none"); 
+     * } 
+     * 
+     * env.put("java.naming.ldap.attributes.binary", StringUtil.join(this.fBinaryAttributes, " ")); 
+     * Integer timeout = new Integer(this.fLdapTimeout * 1000); 
+     * env.put("com.sun.jndi.ldap.connect.timeout", timeout.toString()); 
+     * timeout = new Integer(this.fLdapReadTimeout * 1000); 
+     * env.put("com.sun.jndi.ldap.read.timeout", timeout.toString());
+     * 
+     */
+    setup(): Hashtable;
+    /**
+     * Sets the LDAP configuration for the instance of GlideLDAP and
+     * initializes some of the configuration
+     * @param sysId ldap_server_config.sys_id
+     */
+    setConfigID(sysId: string): void;
+    getMatching(rdnAddOn: string, search: string, initialQuery: boolean, maxRecords: number): GlideLDAPResult;
+    getSearchRDN(rdnAddOn: string): string;
+    authenticate(dn: string, password: string, user: string): boolean;
+    getLDAPRecord(name: string, rdn: string): Hashtable;
+    getMatching(rdnAddOn: string, search: string, initialQuery: boolean, maxRecords: number): GlideLDAPResult;
+    getLDAPRecord(name: string, rdn: string): Hashtable;
+
+}
 interface GlideHTTPHeader { }
 interface SOAPResponse { }
 interface WSSoapRequestDocument extends Object { }
@@ -1355,3 +1418,103 @@ interface body extends RESTAPIRequestBody { }
 interface dataStream extends GlideScriptableInputStream { }
 interface Condition { }
 interface map { }
+
+declare namespace global {
+        
+    class DurationCalculator {
+        constructor();
+
+        /** 
+         * * Set the schedule and time zone to be used for calculating the due date 
+         */
+        setSchedule(scheduleId: string, timezone?: string): void;
+
+        setTimeZone(timezone: string): void;
+
+        /** 
+         * Set the start date/time for the duration calculations 
+         * (expects a value in GMT)
+         * 
+         * If 'start' is blank, use current date/time 
+         */
+        setStartDateTime(start: GlideDateTime | string): void;
+
+        /**
+         * Get the this.endDateTime property that was set by calcDuration/calcRelativeDuration
+         * indicating the end date and time for the duration.
+         */
+        getEndDateTime(): GlideDateTime;
+
+        /**
+         * Get the this.seconds property that was set by calcDuration/calcRelativeDuration
+         * indicating the total number of seconds of work to be performed for the duration.
+         *
+         * (Note: this is the total work time, not the total time between start and end times
+         * and may be used to determine percentages of the work time)
+         */
+        getSeconds(): number;
+
+
+        /**
+         * Get the this.totalSeconds property that was set by calcDuration/calcRelativeDuration
+         * indicating the total number of seconds between the start and end times of the duration.
+         */
+        getTotalSeconds(): number;
+
+        /**
+         * Get the (actual) duration, between startTime and endTime, within the already specified schedule
+         * (and optionally overridden timezone)
+         * Sets this.endDateTime (for completeness), this.seconds, and this.totalSeconds.
+         * NB. returns 0 if endTime is before startTime
+         */
+        calcScheduleDuration(startTime: GlideDateTime|string, endTime: GlideDateTime|string): number;
+
+        /**
+         * Calculate the end date and time.
+         *
+         * Upon completion this.endDateTime, this.seconds and this.totalSeconds properties
+         * will be set to indicate the results of the calculation
+         */
+        calcDuration(seconds: number): boolean;
+
+        /**
+         * Calculate the duration using the specified relative duration script.
+         *
+         * Upon completion the this.endDateTime and this.seconds properties will
+         * be set to indicate the results of the calculation
+         * @param relativeDurationID cmn_relative_duration.sys_id
+         */
+        calcRelativeDuration(relativeDurationID: string): object;
+
+        /**
+         * Is 'time' of day after the time of day specified by glideDateTime?
+         * @param glideDateTime if glideDateTime is blank, use this.startDateTime
+         * @param time formatted as hh:mm:ss
+         */
+        isAfter(glideDateTime: GlideDateTime, time: string): boolean;
+
+
+        /**
+         * Called from relative duration definitions, initiated by calcRelativeDuration(), as
+         *    calculator.calcRelativeDueDate(calculator.startDateTime, days);
+         *
+         * Calculate the due date starting at 'start' and adding 'days' using the
+         * schedule and time zone.  When we find the day that the work is due on,
+         * set the time to 'endTime' of that day.
+         *
+         * If there are not enough days left in the schedule, use the last day in the schedule
+         * return false, if there were no days in the schedule
+         *
+         *    endTime is specified as "hh:mm:ss" or blank to indicate the end of
+         *    the work day
+         *
+         * Upon completion, this.endDateTime, this.seconds and this.totalSeconds properties will be set
+         * to indicate the results of the calculation.
+         * @param start GlideDate time to use as start of relative duration
+         * @param days Number of days for the duration
+         * @param endTime Time in hh:mm:ss format that represents the time at end of the day
+         */
+        calcRelativeDueDate(start: GlideDateTime, days: number, endTime?: string): boolean;
+    }
+
+}
