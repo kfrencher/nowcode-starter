@@ -2,6 +2,36 @@
 Copyright (C) 2019 ServiceNow, Inc. All rights reserved.
 */
 
+declare class GlideImpersonate {
+    /**
+     * Verifies whether the specified user can perform debugging on scripts. 
+     * In order for a user to be able to debug scripts, they must be on a developer instance. Debugging is not allowed on production instances.
+     */
+    canDebug(userSysId: string): boolean;
+
+
+    /**
+     * Verifies whether the current user can impersonate the specified user.
+     * If the current user is not assigned the admin role, the user to impersonate is inactive,
+     * or there are other issues with impersonating the specified user, the method returns "false" and the user cannot be impersonated.
+     */
+    canImpersonate(userSysId: string): boolean;
+
+    /**
+     * Sets the user ID for the current administrator to the passed-in user ID, enabling the administrator to act as that user.
+     * @param userSysId 
+     * @returns Sys_id of the user that was logged in prior to the impersonation request.
+     */
+    impersonate(userSysId: string): string;
+
+    /**
+     * Determines whether the current user is impersonating another user.
+     * @returns {boolean} True if the current user is impersonating another user, false otherwise.
+     */
+    isImpersonating(): boolean;
+
+}
+
 /** The scoped GlideDate class provides methods for performing operations on GlideDate objects, such as instantiating GlideDate objects or working with GlideDate fields */
 declare class GlideDate {
     constructor();
