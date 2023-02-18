@@ -1,6 +1,31 @@
+declare var current: GlideRecord;
+declare var previous: GlideRecord;
+declare var $;
+declare var $sp;
+declare var input;
+declare var data;
+declare var options;
+
 /*
 Copyright (C) 2019 ServiceNow, Inc. All rights reserved.
 */
+
+declare class GlideDBObjectManager {
+    /**
+     * Returns a java.util.Collection
+     * Must be converted to a JavaScript array before use.
+     * @example
+     * GlideDBObjectManager.getTables('incident').toArray().join()
+     */
+    static getTables(tableName: string): any
+}
+
+declare class GlideTableDescriptor {
+    static get(tableName: string): GlideTableDescriptor;
+    static isValid(tableName: string): boolean;
+
+    getED(): GlideElementDescriptor;
+}
 
 declare class GlideImpersonate {
     /**
@@ -292,8 +317,8 @@ declare class GlideSession {
 declare class GlideAggregate {
     constructor(tableName: string);
     /** Adds a query to the aggregate */
-    addQuery(field: string, operator: string, value: (string | string[])): GlideQueryCondition;
-    addQuery(field: string, value: (string | string[])): GlideQueryCondition;
+    addQuery(field: string, operator: string, value: (string | string[] | boolean)): GlideQueryCondition;
+    addQuery(field: string, value: (string | string[] | boolean)): GlideQueryCondition;
     /** Adds a NULL query to the aggregate */
     addNullQuery(field: string): GlideQueryCondition;
     /** Adds a NOT NULL query to the aggregate */
@@ -416,6 +441,8 @@ declare class GlideElementDescriptor {
     getLabel(): string;
     /** Returns the field's length */
     getLength(): number;
+    /** Returns the field attribute as a boolean */
+    getBooleanAttribute(attributeName: string): boolean;
 }
 /** Scoped GlideRecord is used for database operations instead of writing SQL queries. Provides data access APIs to retrieve, update, and delete records from a table */
 declare class GlideRecord {
@@ -725,6 +752,9 @@ declare class XMLNodeIterator {
 /** The scoped GlideSystem (referred to by the variable name 'gs' in any server-side JavaScript) API provides a number of convenient methods to get information about the system, the current logged in user, etc. */
 declare const gs: gs;
 interface gs {
+    getScopeLabelByRecordId(sysId: string): string;
+    getCurrentApplicationName(): string;
+    hasRightsTo(entity: string, obj: any);
     beginningOfToday(): string;
     logWarning(msg: string, source?: string): void;
     logError(msg: string, source?: string): void;
@@ -1377,11 +1407,14 @@ declare class DataBuilder {
     /** Adds the specified value to the data at the specified time */
     add(start: GlideDateTime, value: number): DataBuilder;
 }
+// @ts-ignore
 declare class Iterator {
     next(): any;
     hasNext(): boolean;
 }
+// @ts-ignore
 declare class Set {
+    // @ts-ignore
     iterator(): Iterator;
     contains(item: any): boolean;
     toArray(): any[];
@@ -1389,6 +1422,7 @@ declare class Set {
 declare class Hashtable {
     get(key: any): any;
     put(key: any, value: any): any;
+    // @ts-ignore
     keySet(): Set
     toString(): string;
 }
@@ -1546,5 +1580,10 @@ declare namespace global {
          */
         calcRelativeDueDate(start: GlideDateTime, days: number, endTime?: string): boolean;
     }
+}
 
+declare namespace sn_atf {
+    class UserTestProcessor {
+        copyTest(sourceTestSysId: string): string;
+    }
 }
