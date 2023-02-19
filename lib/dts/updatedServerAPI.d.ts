@@ -5,6 +5,8 @@ declare var $sp;
 declare var input;
 declare var data;
 declare var options;
+declare var action;
+declare var answer;
 
 /*
 Copyright (C) 2019 ServiceNow, Inc. All rights reserved.
@@ -1580,6 +1582,11 @@ declare namespace global {
          */
         calcRelativeDueDate(start: GlideDateTime, days: number, endTime?: string): boolean;
     }
+}
+
+declare class ActionUtils {
+    postInsert(current: GlideRecord): void;
+
 }
 
 declare namespace sn_atf {
