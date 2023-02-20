@@ -455,9 +455,9 @@ declare class GlideRecord {
     /** Runs the query against the table based on the specified filters by addQuery and addEncodedQuery */
     query(): void;
     /** Defines a GlideRecord based on the specified expression of name = value */
-    get(name: any, value: any): boolean;
+    get(name: any, value?: any): boolean;
     /** Updates the current GlideRecord with any changes that have been made */
-    update(reason: any): string;
+    update(reason?: any): string;
     /** Updates each GlideRecord in the list with any changes that have been made */
     updateMultiple(): void;
     /** Deletes the current record */
@@ -562,8 +562,10 @@ declare class GlideQueryCondition {
     constructor();
     /** Adds an OR condition to the current condition. oper is an optional parameter */
     addOrCondition(name: string, oper: string, value: any): GlideQueryCondition;
+    addOrCondition(name: string, value: any): GlideQueryCondition;
     /** Adds an AND condition to the current condition. oper is an optional parameter */
     addCondition(name: string, oper: string, value: any): GlideQueryCondition;
+    addCondition(name: string, value: any): GlideQueryCondition;
 }
 /** The API allows you to evaluate scripts from a GlideRecord field */
 declare class GlideScopedEvaluator {
@@ -782,6 +784,7 @@ interface gs {
     nil(o: Object): boolean;
     /** Retrieves a message from UI messages. args is an optional paramter */
     getMessage(id: string, args: any): string;
+    getMessage(id: string): string;
     /** Determines if the current user has the specified role */
     hasRole(role: string): boolean;
     /** Provides a safe way to call from the sandbox, allowing only trusted scripts to be included */
