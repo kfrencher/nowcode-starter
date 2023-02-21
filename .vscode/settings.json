@@ -15,5 +15,7 @@
         "statusBar.foreground": "#fff",
         "activityBar.background": "#1D856D",
         "activityBar.foreground": "#fff"
-    }
+    },
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "eslint.lintTask.enable": true
 }
