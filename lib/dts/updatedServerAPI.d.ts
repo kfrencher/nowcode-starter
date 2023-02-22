@@ -1413,12 +1413,12 @@ declare class DataBuilder {
     add(start: GlideDateTime, value: number): DataBuilder;
 }
 // @ts-ignore
-declare class Iterator {
+declare class JavaIterator {
     next(): any;
     hasNext(): boolean;
 }
 // @ts-ignore
-declare class Set {
+declare class JavaSet {
     // @ts-ignore
     iterator(): Iterator;
     contains(item: any): boolean;
