@@ -4,6 +4,9 @@
     "es2022": true,
     "jasmine": true
   },
+  "globals": {
+    "JSON": "readonly"
+  },
   "rules": {
     "constructor-super": "warn",
     "no-case-declarations": "warn",
