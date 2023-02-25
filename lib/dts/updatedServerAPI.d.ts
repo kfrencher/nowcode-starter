@@ -385,6 +385,8 @@ declare class GlideUser {
 /** GlideSession manages all of the information for a user session. You can retrieve this from gs.getSession() */
 declare class GlideSession {
     constructor();
+    /** Returns true if the user is impersonating another user. */
+    isImpersonating(): boolean;
     /** Checks if the current session is interactive */
     isInteractive(): boolean;
     /** Determines if the current user is currently logged in */
@@ -538,6 +540,15 @@ declare class GlideElementDescriptor {
 /** Scoped GlideRecord is used for database operations instead of writing SQL queries. Provides data access APIs to retrieve, update, and delete records from a table */
 declare class GlideRecord {
     constructor(tableName: string);
+    /**
+     * Apply a template record from the Template table [sys_template] to the current record.
+     *  If the specified template is not found, no action is taken.
+     * Note: This method automatically instantiates a now_GR.insert() method if a template 
+     * has the Next Related Child Template field filled. For information, see Create 
+     * templates for related task records.
+     * @param template Name of a template from the Templates [sys_template] table.
+     */
+    applyTemplate(template: string): void;
     [fieldName: string]: any;
     /** Insert a new record using the field values that have been set for the current record */
     insert(): string;
