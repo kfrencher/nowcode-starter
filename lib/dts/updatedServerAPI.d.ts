@@ -1,16 +1,105 @@
 declare var current: GlideRecord;
 declare var previous: GlideRecord;
-declare var $;
-declare var $sp;
-declare var input;
-declare var data;
-declare var options;
-declare var action;
-declare var answer;
+declare var $: any;
+declare var $sp: any;
+declare var input: any;
+declare var data: any;
+declare var options: any;
+declare var action: SN_UI_Action;
+declare var answer: boolean;
 
-/*
-Copyright (C) 2019 ServiceNow, Inc. All rights reserved.
-*/
+interface SPAction {
+    [key: string]: any;
+    primary?: boolean;
+    sys_id: string;
+    action_name: string;
+    form_style: string;
+    hint: string;
+    is_button: boolean;
+    is_context: boolean;
+    is_link: boolean;
+    is_custom: boolean;
+    display_order: number;
+    name: string;
+    fn: string;
+    onclick: string;
+    is_client: boolean;
+}
+
+interface AngularScope extends angular.IScope {
+    [key: string]: any;
+}
+
+interface SN_UI_Action {
+    /**
+     * Gets a GlideURI object to determine the user view.
+     */
+    getGlideURI(): GlideURI;
+
+    /**
+     * Gets the URL of the return page in view after a UI action is complete.
+     */
+    getReturnURL(): string;
+
+    /**
+     * Gets the value of a URL parameter.
+     */
+    getURLParameter(parameterName: string): string;
+
+    /**
+     * Opens a page with a GlideRecord in the user view.
+     */
+    openGlideRecord(glideRecord: GlideRecord): void;
+
+    /**
+     * Indicates whether to enable or disable pop-up windows on the page in the current view.
+     * @param
+     */
+    setNoPop(noPop: boolean): void;
+    /**
+     * Sets the redirect URI for this transaction, which determines the next page the user sees.
+     * @param url URL to set as the redirect. You can provide the URL as a string or a 
+     * GlideRecord. If you pass the URL as a GlideRecord, this value takes the focus to 
+     * that record's form.
+     */
+    setRedirectURL(url: string | GlideRecord): void;
+
+    /**
+     * Sets the return URI for this transaction after a UI action is complete. You can 
+     * use this method to determine what page the user has in view when they return 
+     * from submit. 
+     * @param url URI to set as the return location after a UI action is complete. You 
+     * can provide the URL as a string or a GlideRecord.
+     */
+    setReturnURL(url: string | GlideRecord): void;
+
+    /**
+     * Sets a URL parameter name and value.
+     */
+    setURLParameter(parameterName: string, parameterValue: string): void;
+}
+
+interface GlideURI {
+    /**
+     * Returns the value of the specified parameter 
+     */
+    get(name: string): string;
+    /**
+     * Returns the file name portion of the URI.
+     */
+    getFileFromPath(): string;
+    /**
+     * Sets the specified parameter to the specified value.
+     */
+    set(name: string, value: string): void;
+    /**
+     * Reconstructs the URI string and performs the proper URL encoding by 
+     * converting non-valid characters to their URL code.
+     * For example, converting & to '%26'.  Parameters set with the set() 
+     * method are encoded with the URI as well.
+     */
+    toString(): string;
+}
 
 declare class GlideDBObjectManager {
     /**
@@ -483,6 +572,7 @@ declare class GlideRecord {
     addJoinQuery(joinTable: string, primaryField: any, joinTableField: any): GlideQueryCondition;
     /** Retrieves the GlideElement for a specified field */
     getElement(fieldName: string): GlideElement;
+    getElements(): GlideElement[];
     /** Retrieves the number of rows in the GlideRecord */
     getRowCount(): number;
     /** Retrieves the table name associated with this GlideRecord */
@@ -758,7 +848,7 @@ declare const gs: gs;
 interface gs {
     getScopeLabelByRecordId(sysId: string): string;
     getCurrentApplicationName(): string;
-    hasRightsTo(entity: string, obj: any);
+    hasRightsTo(entity: string, obj: any): boolean;
     beginningOfToday(): string;
     logWarning(msg: string, source?: string): void;
     logError(msg: string, source?: string): void;
@@ -1489,7 +1579,63 @@ interface Condition { }
 interface map { }
 
 declare namespace global {
-        
+
+    class JavaArray {
+        size(): number;
+        get(index: number): any;
+    }
+
+    class ArrayUtil {
+        /**
+         * Merge two arrays.
+         */
+        concat<T>(...arrays: T[][]): T[];
+
+        /**
+         * Searches the array for the specified element. Returns true if the element 
+         * exists in the array, otherwise returns false.
+         */
+        contains<T>(array: T[], obj: T): boolean;
+
+        /**
+         * Converts a Java object to an array.
+         */
+        convertArray(a: JavaArray | any[]): any[];
+
+        /**
+         * Finds the differences between two or more arrays.
+         * Any number of arrays can be provided as parameters.
+         */
+        diff<T>(a: T[], b: T[]): T[];
+
+        /**
+         * Returns an array from the specified object.
+         */
+        ensureArray<T>(obj: T | T[]): T[];
+
+        /**
+         * Searches the array for the element. Returns the element index or -1 if not found.
+         */
+        indexOf<T>(array: T[], element: T): number;
+
+        /**
+         * Finds the elements present in all arrays.
+         * Any number of arrays can be provided as parameters. 
+         */
+        intersect<T>(...arrays: T[][]): T[];
+
+        /**
+         * Merge two or more arrays.
+         * Any number of arrays can be provided as parameters. 
+         */
+        union<T>(...arrays: T[][]): T[];
+
+        /**
+         * Removes duplicate items from an array.
+         */
+        unique<T>(a: T[]): T[];
+    }
+
     class DurationCalculator {
         constructor();
 
@@ -1536,7 +1682,7 @@ declare namespace global {
          * Sets this.endDateTime (for completeness), this.seconds, and this.totalSeconds.
          * NB. returns 0 if endTime is before startTime
          */
-        calcScheduleDuration(startTime: GlideDateTime|string, endTime: GlideDateTime|string): number;
+        calcScheduleDuration(startTime: GlideDateTime | string, endTime: GlideDateTime | string): number;
 
         /**
          * Calculate the end date and time.

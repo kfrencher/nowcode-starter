@@ -19,6 +19,7 @@ interface g_navigation {
 /** g_form is a global object used in client-side scripts to customize forms */
 declare const g_form: g_form;
 interface g_form {
+    hasField(fieldName: string): boolean;
     /** Adds an icon on a field’s label. This method is available starting with the Fuji release */
     addDecoration(fieldName: string, icon: string, title: string): void;
     /** Displays an error message at the top of the form */
@@ -104,7 +105,7 @@ interface g_form {
     /** Shows or hides a section Works in both tab and flat modes. This method is available starting with the Fuji release */
     setSectionDisplay(sectionName: string, display: boolean): boolean;
     /** Sets the value and the display value of a field Will display value if there is no displayValue */
-    setValue(fieldName: string, value: string, displayValue: string): void;
+    setValue(fieldName: string, value: string, displayValue?: string): void;
     /** Displays the field if true. Hides the field if false. If the field is hidden, the space is left blank. This method cannot hide mandatory fields with no value */
     setVisible(fieldName: string, display: boolean): void;
     /** Displays an error message under the specified form field (either a control object or the name of the field). If the control or field is currently scrolled off the screen, it will be scrolled to. A global property (glide.ui.scroll_to_message_field) is available that controls automatic message scrolling when the form field is offscreen (scrolls the form to the control or field). The showFieldMsg() method is a similar method that requires a 'type' parameter */
@@ -116,7 +117,7 @@ interface g_form {
     /** Displays all related lists on the form */
     showRelatedLists(): void;
     /** Saves the record User will be taken away from the form, returning them to where they were previously */
-    submit(): void;
+    submit(actionNameOrActionSysId?: string): boolean;
 }
 /** g_list is a global object used in client-side scripts to customize lists */
 declare const g_list: g_list;
